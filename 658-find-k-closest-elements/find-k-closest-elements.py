@@ -9,6 +9,5 @@ class Solution:
             heappush(heap, (-(abs(val-x)), -val))
             if len(heap) > k:
                 temp = heappop(heap)
-        res = [-t[1] for t in heap]
-        res.sort()
+        res = sorted([-t[1] for t in heap])
         return res
