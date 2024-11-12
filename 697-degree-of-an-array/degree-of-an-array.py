@@ -1,21 +1,28 @@
 class Solution:
     def findShortestSubArray(self, nums: List[int]) -> int:
+    # Dictionaries to track frequency, first, and last indices
         freq = defaultdict(int)
-        for num in nums:
+        first = {}
+        last = {}
+        
+        for index, num in enumerate(nums):
+            # Count frequency
             freq[num] += 1
+            # Record the first occurrence
+            if num not in first:
+                first[num] = index
+            # Always update the last occurrence
+            last[num] = index
+        
+        # Determine the degree of the array
         degree = max(freq.values())
+        
+        # Find the shortest subarray with the same degree
         res = float('inf')
         for key, val in freq.items():
             if val == degree:
-                fp, sp = None, None
-                for index, num in enumerate(nums):
-                    if (fp == None) and (sp == None) and num == key:
-                        print(index)
-                        fp = index
-                        sp = index
-                    elif num == key and not (fp == None):
-                        sp = index
-                print(fp, sp)
-                res = min(res, sp-fp+1)
+                res = min(res, last[key] - first[key] + 1)
+        
         return res
+
 
