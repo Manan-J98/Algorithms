@@ -1,25 +1,17 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        memo = {}
-
-        def solve(index):
-            # Base case: If we reach or exceed the last index, no more jumps are needed
-            if index >= len(nums) - 1:
-                return 0
+        jumps = 0
+        maxReach = 0
+        currentEnd = 0
+        
+        for i in range(len(nums) - 1):  # We don't need to process the last index
+            maxReach = max(maxReach, i + nums[i])  # Update the furthest reach
             
-            # If already computed, return the cached result
-            if index in memo:
-                return memo[index]
-
-            # Initialize the minimum jumps to a large value
-            min_jumps = float('inf')
-
-            # Explore all possible jumps from the current position
-            for jump in range(1, nums[index] + 1):
-                min_jumps = min(min_jumps, 1 + solve(index + jump))
-            
-            # Cache the result
-            memo[index] = min_jumps
-            return min_jumps
-
-        return solve(0)
+            if i == currentEnd:  # If we've reached the end of the current jump range
+                jumps += 1       # Increment the jump count
+                currentEnd = maxReach  # Update the current range to the furthest reach
+                
+                if currentEnd >= len(nums) - 1:  # If we can reach the end
+                    return jumps
+        
+        return jumps  # Return jumps after the loop
