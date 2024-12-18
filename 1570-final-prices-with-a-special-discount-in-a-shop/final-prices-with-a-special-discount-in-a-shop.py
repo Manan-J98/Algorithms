@@ -1,8 +1,10 @@
 class Solution:
     def finalPrices(self, prices: List[int]) -> List[int]:
+        stack = []
+        res = prices[:]
         for i in range(len(prices)):
-            for j in range(i+1, len(prices)):
-                if prices[j] <= prices[i]:
-                    prices[i] -= prices[j]
-                    break
-        return prices
+            while stack and prices[stack[-1]] >= prices[i]:
+                idx = stack.pop()
+                res[idx] -= prices[i]
+            stack.append(i)
+        return res
