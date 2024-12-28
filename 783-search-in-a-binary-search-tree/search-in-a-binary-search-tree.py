@@ -12,6 +12,7 @@ class Solution:
                 return
             if root.val == val:
                 res[0] = root
+                return
             left = dfs(root.left)
             right = dfs(root.right)
             return
