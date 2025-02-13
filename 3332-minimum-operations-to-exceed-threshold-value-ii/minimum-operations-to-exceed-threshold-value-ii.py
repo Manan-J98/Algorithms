@@ -11,4 +11,4 @@ class Solution:
             heappush(heap, x * 2 + y)
             operations += 1
 
-        return operations if heap[0] >= k else -1  # If last element is still < k, return -1
+        return operations  # If last element is still < k, return -1
